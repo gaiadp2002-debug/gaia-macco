@@ -505,7 +505,21 @@ button:hover {
     <button style="max-width:850px" onclick="openRepository()">
         OPEN GITHUB REPOSITORY →
     </button>
+<div class="achievement">
 
+    <div class="achievement-title">
+        LATEST ACHIEVEMENT
+    </div>
+
+    <div class="achievement-name" id="achievementName">
+        🔒 NO ACHIEVEMENTS YET
+    </div>
+
+    <div class="unlock" id="achievementDescription">
+        Complete your first mission.
+    </div>
+
+</div>
 </section>
 
 
@@ -730,44 +744,127 @@ async function checkProgress() {
 
             const button = card.querySelector("button");
 
-            if (issue && issue.state === "closed") {
+            const completed = issue && issue.state === "closed";
+            const previousIssue =
+                number === 1 ||
+                (
+                    issues.find(
+                        item => item.number === number - 1
+                    )?.state === "closed"
+                );
+
+            if (completed) {
 
                 fixed++;
 
+                card.classList.remove("locked");
+                card.classList.add("completed");
+
                 button.innerHTML = "✅ FIXED";
                 button.disabled = true;
-                button.style.opacity = "0.55";
                 button.style.cursor = "default";
+                button.style.opacity = "0.55";
 
-                card.style.borderColor = "rgba(80, 255, 160, .45)";
+            } else if (previousIssue) {
 
-            } else {
+                card.classList.remove("locked");
 
                 button.innerHTML = "INVESTIGATE →";
                 button.disabled = false;
+                button.style.cursor = "pointer";
+                button.style.opacity = "1";
 
-                card.style.borderColor = "rgba(255,255,255,.15)";
+            } else {
+
+                card.classList.add("locked");
+
+                button.innerHTML = "🔒 LOCKED";
+                button.disabled = true;
+                button.style.cursor = "not-allowed";
+                button.style.opacity = "0.45";
 
             }
-
         }
+
+
+        // QUEST PROGRESS
 
         const progress = document.getElementById("questProgress");
 
         if (progress) {
-
             progress.innerHTML =
                 "QUEST PROGRESS: " + fixed + " / 8";
-
         }
 
+
+        // ACHIEVEMENTS
+
+        const achievementName =
+            document.getElementById("achievementName");
+
+        const achievementDescription =
+            document.getElementById("achievementDescription");
+
+        if (achievementName && achievementDescription) {
+
+            if (fixed === 0) {
+
+                achievementName.innerHTML =
+                    "🔒 NO ACHIEVEMENTS YET";
+
+                achievementDescription.innerHTML =
+                    "Complete your first mission.";
+
+            } else if (fixed === 1) {
+
+                achievementName.innerHTML =
+                    "🏆 FIRST MEMORY RESTORED";
+
+                achievementDescription.innerHTML =
+                    "The first corrupted memory has been recovered.";
+
+            } else if (fixed <= 3) {
+
+                achievementName.innerHTML =
+                    "🧠 MEMORY HUNTER";
+
+                achievementDescription.innerHTML =
+                    "You are starting to remember how this system works.";
+
+            } else if (fixed <= 6) {
+
+                achievementName.innerHTML =
+                    "📚 ARCHIVIST";
+
+                achievementDescription.innerHTML =
+                    "Half of the relationship database has been restored.";
+
+            } else if (fixed === 7) {
+
+                achievementName.innerHTML =
+                    "⚠️ FINAL BOSS APPROACHING";
+
+                achievementDescription.innerHTML =
+                    "One critical memory remains.";
+
+            } else if (fixed === 8) {
+
+                achievementName.innerHTML =
+                    "👑 RELATIONSHIP OS MASTER";
+
+                achievementDescription.innerHTML =
+                    "All corrupted memories have been restored.";
+
+            }
+        }
+
+
+        // FINAL QUEST
 
         if (fixed === 8) {
 
             setTimeout(() => {
-
                 showScreen("final");
-
             }, 1000);
 
         }
@@ -780,7 +877,6 @@ async function checkProgress() {
         );
 
     }
-
 }
 
 setInterval(checkProgress, 30000);
