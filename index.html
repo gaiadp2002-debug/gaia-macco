@@ -1,271 +1,652 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Relationship OS</title>
+<title>GAIA + MACCO — Relationship Quest</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap');
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            background: #080b12;
-            color: #e8edf5;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        .screen {
-            min-height: 100vh;
-            padding: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(90, 50, 150, .25), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(0, 130, 180, .20), transparent 30%),
+        linear-gradient(135deg, #080812, #111126 50%, #080812);
+    color: #fff;
+    font-family: 'Orbitron', monospace;
+    overflow-x: hidden;
+}
 
-        .terminal {
-            width: 100%;
-            max-width: 850px;
-            border: 1px solid #293241;
-            border-radius: 18px;
-            background: #0d111a;
-            box-shadow: 0 20px 60px rgba(0,0,0,.45);
-            overflow: hidden;
-        }
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .08;
+    background-image:
+        linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
 
-        .topbar {
-            padding: 12px 18px;
-            border-bottom: 1px solid #293241;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+.screen {
+    min-height: 100vh;
+    display: none;
+    padding: 30px 20px;
+    position: relative;
+    z-index: 1;
+}
 
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #687386;
-        }
+.screen.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-        .topbar span {
-            margin-left: 8px;
-            color: #7f8a9d;
-            font-size: 13px;
-        }
+.logo {
+    text-align: center;
+    margin-bottom: 35px;
+}
 
-        .content {
-            padding: 40px 28px;
-        }
+.logo-small {
+    font-size: 11px;
+    letter-spacing: 4px;
+    opacity: .6;
+    margin-bottom: 12px;
+}
 
-        .small {
-            color: #7f8a9d;
-            font-size: 13px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+.logo h1 {
+    margin: 0;
+    font-size: clamp(34px, 10vw, 72px);
+    font-weight: 900;
+    letter-spacing: 5px;
+    text-shadow: 0 0 25px rgba(130, 100, 255, .7);
+}
 
-        h1 {
-            margin: 10px 0 4px;
-            font-size: clamp(38px, 9vw, 72px);
-            letter-spacing: -3px;
-        }
+.logo p {
+    margin-top: 12px;
+    letter-spacing: 5px;
+    opacity: .65;
+    font-size: 12px;
+}
 
-        .version {
-            color: #8d98aa;
-            margin-bottom: 35px;
-        }
+.panel {
+    width: min(620px, 100%);
+    border: 1px solid rgba(255,255,255,.2);
+    background: rgba(5,5,15,.75);
+    backdrop-filter: blur(12px);
+    padding: 25px;
+    box-shadow: 0 0 40px rgba(0,0,0,.5);
+}
 
-        .status {
-            border: 1px solid #4b252c;
-            background: #1a1014;
-            padding: 18px;
-            border-radius: 12px;
-            margin-bottom: 28px;
-        }
+.status {
+    text-align: center;
+    color: #ff5364;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
 
-        .status-title {
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
+.progress {
+    height: 8px;
+    background: rgba(255,255,255,.1);
+    overflow: hidden;
+    margin: 20px 0;
+}
 
-        .status-text {
-            color: #9ba5b5;
-            font-size: 14px;
-        }
+.progress div {
+    width: 20%;
+    height: 100%;
+    background: #9d7cff;
+    box-shadow: 0 0 15px #9d7cff;
+}
 
-        .progress {
-            height: 8px;
-            background: #202633;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 18px;
-        }
+.stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 25px 0;
+}
 
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: #e8edf5;
-            transition: width .5s ease;
-        }
+.stat {
+    border: 1px solid rgba(255,255,255,.12);
+    padding: 15px;
+    background: rgba(255,255,255,.03);
+}
 
-        .button {
-            display: inline-block;
-            padding: 14px 20px;
-            border-radius: 10px;
-            border: 1px solid #3b4658;
-            background: #151b26;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: .2s;
-        }
+.stat span {
+    display: block;
+    font-size: 9px;
+    opacity: .5;
+    margin-bottom: 7px;
+}
 
-        .button:hover {
-            background: #202838;
-            transform: translateY(-1px);
-        }
+.stat strong {
+    font-size: 13px;
+}
 
-        .mission {
-            display: none;
-            margin-top: 30px;
-            padding: 22px;
-            border: 1px solid #293241;
-            border-radius: 12px;
-            background: #101620;
-        }
+button {
+    width: 100%;
+    border: 1px solid #9d7cff;
+    background: rgba(157,124,255,.1);
+    color: white;
+    padding: 17px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: .2s;
+    margin-top: 10px;
+}
 
-        .mission h2 {
-            margin-top: 0;
-        }
+button:hover {
+    background: #9d7cff;
+    color: #090912;
+    box-shadow: 0 0 25px rgba(157,124,255,.6);
+}
 
-        .mission p {
-            color: #aeb7c5;
-            line-height: 1.6;
-        }
+.terminal {
+    min-height: 230px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .footer {
-            margin-top: 40px;
-            color: #596476;
-            font-size: 12px;
-        }
+.terminal-text {
+    width: 100%;
+    line-height: 2;
+    font-size: 12px;
+}
 
-        @media (max-width: 600px) {
-            .screen {
-                padding: 12px;
-            }
+.cursor {
+    animation: blink .8s infinite;
+}
 
-            .content {
-                padding: 28px 20px;
-            }
+@keyframes blink {
+    50% { opacity: 0; }
+}
 
-            h1 {
-                letter-spacing: -2px;
-            }
-        }
-    </style>
+.quest-header {
+    width: min(850px, 100%);
+    margin-bottom: 25px;
+}
+
+.quest-header h2 {
+    margin: 0 0 8px;
+    font-size: 24px;
+}
+
+.quest-header p {
+    font-size: 10px;
+    opacity: .55;
+    letter-spacing: 2px;
+}
+
+.quest {
+    width: min(850px, 100%);
+    display: grid;
+    gap: 12px;
+}
+
+.quest-card {
+    border: 1px solid rgba(255,255,255,.15);
+    background: rgba(5,5,15,.75);
+    padding: 18px;
+    display: grid;
+    grid-template-columns: 55px 1fr auto;
+    gap: 15px;
+    align-items: center;
+}
+
+.quest-number {
+    font-size: 12px;
+    opacity: .5;
+}
+
+.quest-card h3 {
+    margin: 0 0 6px;
+    font-size: 12px;
+}
+
+.quest-card p {
+    margin: 0;
+    font-size: 9px;
+    opacity: .5;
+}
+
+.badge {
+    font-size: 8px;
+    color: #ff5364;
+    border: 1px solid #ff5364;
+    padding: 7px;
+}
+
+.final {
+    text-align: center;
+}
+
+.final .big {
+    font-size: clamp(38px, 12vw, 75px);
+    font-weight: 900;
+    margin: 20px 0;
+    text-shadow: 0 0 30px rgba(157,124,255,.7);
+}
+
+.final h2 {
+    letter-spacing: 4px;
+}
+
+.final p {
+    line-height: 2;
+    font-size: 12px;
+    opacity: .75;
+}
+
+.pack {
+    font-size: clamp(35px, 12vw, 70px);
+    margin: 25px 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.footer {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 8px;
+    opacity: .3;
+    letter-spacing: 2px;
+}
+
+@media (max-width: 500px) {
+    .panel {
+        padding: 20px;
+    }
+
+    .quest-card {
+        grid-template-columns: 40px 1fr;
+    }
+
+    .quest-card button {
+        grid-column: 1 / -1;
+    }
+
+    .badge {
+        display: none;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<div class="screen">
+<!-- HOME -->
+<section id="home" class="screen active">
 
-    <main class="terminal">
+    <div class="logo">
+        <div class="logo-small">RELATIONSHIP OS v8.3</div>
+        <h1>GAIA × MACCO</h1>
+        <p>THE FINAL QUEST</p>
+    </div>
 
-        <div class="topbar">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <span>relationship-os://system</span>
+    <div class="panel">
+
+        <div class="status">
+            🔴 SYSTEM STATUS: BUILD FAILED
         </div>
 
-        <section class="content">
+        <div class="progress">
+            <div></div>
+        </div>
 
-            <div class="small">GAIA + MACCO</div>
+        <div class="stats">
 
-            <h1>Relationship OS</h1>
-
-            <div class="version">
-                system version 8.3
+            <div class="stat">
+                <span>PLAYER 1</span>
+                <strong>MACCO</strong>
             </div>
 
-            <div class="status">
-
-                <div class="status-title">
-                    🔴 SYSTEM STATUS: BUILD FAILED
-                </div>
-
-                <div class="status-text">
-                    Critical relationship data corruption detected.
-                    Manual intervention required.
-                </div>
-
-                <div class="progress">
-                    <div class="progress-bar" id="progressBar"></div>
-                </div>
-
+            <div class="stat">
+                <span>PLAYER 2</span>
+                <strong>GAIA</strong>
             </div>
 
-            <button class="button" onclick="startSystem()">
-                INITIALIZE SYSTEM
-            </button>
-
-            <div class="mission" id="mission">
-
-                <h2>Welcome, Nerdacco.</h2>
-
-                <p>
-                    You have been assigned a debugging mission.
-                </p>
-
-                <p>
-                    The Relationship OS has been running for more than
-                    eight years and has accumulated several critical bugs.
-                </p>
-
-                <p>
-                    Your task is simple:
-                    <strong>find them, understand them and fix them.</strong>
-                </p>
-
-                <button class="button" onclick="openRepository()">
-                    OPEN GITHUB REPOSITORY
-                </button>
-
+            <div class="stat">
+                <span>SAVE FILE</span>
+                <strong>07/07/2018</strong>
             </div>
 
-            <div class="footer">
-                Developer: Marco<br>
-                Co-developer: Gaia<br>
-                System uptime: 8+ years
+            <div class="stat">
+                <span>PLAYTIME</span>
+                <strong>8+ YEARS</strong>
             </div>
 
-        </section>
+        </div>
 
-    </main>
+        <button onclick="initializeSystem()">
+            ▶ INITIALIZE SYSTEM
+        </button>
 
-</div>
+    </div>
+
+    <div class="footer">
+        TWO PLAYERS · ONE SAVE FILE · COUNTLESS MEMORIES
+    </div>
+
+</section>
+
+
+<!-- BOOT -->
+<section id="boot" class="screen">
+
+    <div class="panel terminal">
+        <div class="terminal-text" id="terminal"></div>
+    </div>
+
+</section>
+
+
+<!-- MISSION CONTROL -->
+<section id="missions" class="screen">
+
+    <div class="quest-header">
+
+        <h2>MISSION CONTROL</h2>
+
+        <p>
+            8 MEMORY CORRUPTIONS DETECTED · DEVELOPER INTERVENTION REQUIRED
+        </p>
+
+    </div>
+
+    <div class="quest">
+
+        <div class="quest-card">
+            <div class="quest-number">001</div>
+            <div>
+                <h3>WHEN DID IT ALL BEGIN?</h3>
+                <p>Restore the relationship start date.</p>
+            </div>
+            <div class="badge">🔴 ERROR</div>
+        </div>
+
+        <div class="quest-card">
+            <div class="quest-number">002</div>
+            <div>
+                <h3>THE FIRST ENCOUNTER</h3>
+                <p>Recover the year of the first meeting.</p>
+            </div>
+            <div class="badge">🔴 ERROR</div>
+        </div>
+
+        <div class="quest-card">
+            <div class="quest-number">003</div>
+            <div>
+                <h3>THE FIRST KISS</h3>
+                <p>Restore the corrupted date.</p>
+            </div>
+            <div class="badge">🔴 ERROR</div>
+        </div>
+
+        <div class="quest-card">
+            <div class="quest-number">004</div>
+            <div>
+                <h3>WRONG LOCATION DETECTED</h3>
+                <p>Find the first real meeting place.</p>
+            </div>
+            <div class="badge">🔴 ERROR</div>
+        </div>
+
+        <div class="quest-card">
+            <div class="quest-number">005</div>
+            <div>
+                <h3>FIRST EXPEDITION CORRUPTED</h3>
+                <p>Recover the first trip together.</p>
+            </div>
+            <div class="badge">🔴 ERROR</div>
+        </div>
+
+        <div class="quest-card">
+            <div class="quest-number">006</div>
+            <div>
+                <h3>AUDIO MEMORY CORRUPTION</h3>
+                <p>Restore the first concert.</p>
+            </div>
+            <div class="badge">🔴 ERROR</div>
+        </div>
+
+        <div class="quest-card">
+            <div class="quest-number">007</div>
+            <div>
+                <h3>MONTHLY PROTOCOL FAILURE</h3>
+                <p>Restore the monthly tradition.</p>
+            </div>
+            <div class="badge">🔴 ERROR</div>
+        </div>
+
+        <div class="quest-card">
+            <div class="quest-number">008</div>
+            <div>
+                <h3>⚠ WINNER SYSTEM COMPROMISED</h3>
+                <p>There can only be one winner.</p>
+            </div>
+            <div class="badge">☠ CRITICAL</div>
+        </div>
+
+    </div>
+
+    <button style="max-width:850px" onclick="openRepository()">
+        OPEN GITHUB REPOSITORY →
+    </button>
+
+</section>
+
+
+<!-- FINAL -->
+<section id="final" class="screen">
+
+    <div class="panel final">
+
+        <div class="logo-small">
+            SYSTEM RESTORED
+        </div>
+
+        <div class="big">
+            8 / 8
+        </div>
+
+        <h2>BUILD SUCCESSFUL</h2>
+
+        <p>
+            All corrupted memories have been restored.
+        </p>
+
+        <p>
+            Relationship OS is operational.
+        </p>
+
+        <button onclick="newQuest()">
+            ✦ NEW QUEST UNLOCKED
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- NEW QUEST -->
+<section id="newquest" class="screen">
+
+    <div class="panel final">
+
+        <div class="logo-small">
+            REWARD SYSTEM
+        </div>
+
+        <h2>THE NEXT ADVENTURE</h2>
+
+        <div class="pack">🎒</div>
+
+        <p>
+            This quest cannot be completed from home.
+        </p>
+
+        <p>
+            <strong>DURATION:</strong> 1 WEEKEND
+        </p>
+
+        <p>
+            <strong>PLAYERS:</strong> 2
+        </p>
+
+        <p>
+            <strong>DESTINATION:</strong> CLASSIFIED
+        </p>
+
+        <p>
+            <strong>DEPARTURE:</strong> CLASSIFIED
+        </p>
+
+        <button onclick="acceptQuest()">
+            ACCEPT QUEST →
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- QUEST ACCEPTED -->
+<section id="accepted" class="screen">
+
+    <div class="panel final">
+
+        <div class="logo-small">
+            QUEST ACCEPTED
+        </div>
+
+        <h2>🎒 PREPARA UN BAGAGLIO</h2>
+
+        <p>
+            Vestiti per un weekend.
+        </p>
+
+        <p>
+            Voglia di avventura: <strong>OBBLIGATORIA</strong>
+        </p>
+
+        <p>
+            Spoiler: <strong>0</strong>
+        </p>
+
+        <p>
+            Compagna di viaggio:
+            <strong>GAIA</strong>
+        </p>
+
+        <p>
+            Destination:
+            <strong>???</strong>
+        </p>
+
+        <div class="pack">🧳</div>
+
+        <p>
+            Your next save point will be somewhere else.
+        </p>
+
+    </div>
+
+</section>
+
 
 <script>
 
-function startSystem() {
+function showScreen(id) {
 
-    document.getElementById("mission").style.display = "block";
+    document.querySelectorAll('.screen').forEach(screen => {
+        screen.classList.remove('active');
+    });
 
-    document.getElementById("progressBar").style.width = "20%";
+    document.getElementById(id).classList.add('active');
+
+    window.scrollTo(0, 0);
 }
+
+
+function initializeSystem() {
+
+    showScreen('boot');
+
+    const terminal = document.getElementById('terminal');
+
+    const messages = [
+        "Initializing Relationship OS...",
+        "Loading save file...",
+        "Checking relationship database...",
+        "Scanning memories...",
+        "⚠ 8 corrupted memories detected.",
+        "Developer intervention required.",
+        "",
+        "WELCOME, NERDACCO."
+    ];
+
+    let index = 0;
+
+    function nextMessage() {
+
+        if (index >= messages.length) {
+
+            setTimeout(() => {
+                showScreen('missions');
+            }, 1200);
+
+            return;
+        }
+
+        terminal.innerHTML +=
+            messages[index] +
+            '<span class="cursor">_</span><br>';
+
+        index++;
+
+        setTimeout(nextMessage, 550);
+    }
+
+    nextMessage();
+}
+
 
 function openRepository() {
 
     window.open(
-        "https://gaiadp2002-debug.github.io/gaia-macco/",
+        "https://github.com/",
         "_blank"
     );
+
+}
+
+
+function newQuest() {
+
+    showScreen('newquest');
+
+}
+
+
+function acceptQuest() {
+
+    showScreen('accepted');
 
 }
 
