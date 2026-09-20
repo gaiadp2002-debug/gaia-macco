@@ -612,8 +612,9 @@ function initializeSystem() {
         if (index >= messages.length) {
 
             setTimeout(() => {
-                showScreen('missions');
-            }, 1200);
+    showScreen('missions');
+    checkProgress();
+}, 1200);
 
             return;
         }
