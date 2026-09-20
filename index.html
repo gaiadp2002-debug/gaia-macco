@@ -747,12 +747,12 @@ for (let number = 1; number <= 8; number++) {
 
             const completed = issue && issue.state === "closed";
             const previousIssue =
-                number === 1 ||
-                (
-                    issues.find(
-                        item => item.number === number - 1
-                    )?.state === "closed"
-                );
+    number === 1 ||
+    (
+        issues.find(
+            item => item.number === issueNumbers[number - 2]
+        )?.state === "closed"
+    );
 
             if (completed) {
 
