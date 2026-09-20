@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Relationship OS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #080b12;
+            color: #e8edf5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .screen {
+            min-height: 100vh;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .terminal {
+            width: 100%;
+            max-width: 850px;
+            border: 1px solid #293241;
+            border-radius: 18px;
+            background: #0d111a;
+            box-shadow: 0 20px 60px rgba(0,0,0,.45);
+            overflow: hidden;
+        }
+
+        .topbar {
+            padding: 12px 18px;
+            border-bottom: 1px solid #293241;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #687386;
+        }
+
+        .topbar span {
+            margin-left: 8px;
+            color: #7f8a9d;
+            font-size: 13px;
+        }
+
+        .content {
+            padding: 40px 28px;
+        }
+
+        .small {
+            color: #7f8a9d;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 10px 0 4px;
+            font-size: clamp(38px, 9vw, 72px);
+            letter-spacing: -3px;
+        }
+
+        .version {
+            color: #8d98aa;
+            margin-bottom: 35px;
+        }
+
+        .status {
+            border: 1px solid #4b252c;
+            background: #1a1014;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 28px;
+        }
+
+        .status-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .status-text {
+            color: #9ba5b5;
+            font-size: 14px;
+        }
+
+        .progress {
+            height: 8px;
+            background: #202633;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 18px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #e8edf5;
+            transition: width .5s ease;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 14px 20px;
+            border-radius: 10px;
+            border: 1px solid #3b4658;
+            background: #151b26;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .button:hover {
+            background: #202838;
+            transform: translateY(-1px);
+        }
+
+        .mission {
+            display: none;
+            margin-top: 30px;
+            padding: 22px;
+            border: 1px solid #293241;
+            border-radius: 12px;
+            background: #101620;
+        }
+
+        .mission h2 {
+            margin-top: 0;
+        }
+
+        .mission p {
+            color: #aeb7c5;
+            line-height: 1.6;
+        }
+
+        .footer {
+            margin-top: 40px;
+            color: #596476;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .screen {
+                padding: 12px;
+            }
+
+            .content {
+                padding: 28px 20px;
+            }
+
+            h1 {
+                letter-spacing: -2px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="screen">
+
+    <main class="terminal">
+
+        <div class="topbar">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <span>relationship-os://system</span>
+        </div>
+
+        <section class="content">
+
+            <div class="small">GAIA + MACCO</div>
+
+            <h1>Relationship OS</h1>
+
+            <div class="version">
+                system version 8.3
+            </div>
+
+            <div class="status">
+
+                <div class="status-title">
+                    🔴 SYSTEM STATUS: BUILD FAILED
+                </div>
+
+                <div class="status-text">
+                    Critical relationship data corruption detected.
+                    Manual intervention required.
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+
+            </div>
+
+            <button class="button" onclick="startSystem()">
+                INITIALIZE SYSTEM
+            </button>
+
+            <div class="mission" id="mission">
+
+                <h2>Welcome, Nerdacco.</h2>
+
+                <p>
+                    You have been assigned a debugging mission.
+                </p>
+
+                <p>
+                    The Relationship OS has been running for more than
+                    eight years and has accumulated several critical bugs.
+                </p>
+
+                <p>
+                    Your task is simple:
+                    <strong>find them, understand them and fix them.</strong>
+                </p>
+
+                <button class="button" onclick="openRepository()">
+                    OPEN GITHUB REPOSITORY
+                </button>
+
+            </div>
+
+            <div class="footer">
+                Developer: Marco<br>
+                Co-developer: Gaia<br>
+                System uptime: 8+ years
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+
+function startSystem() {
+
+    document.getElementById("mission").style.display = "block";
+
+    document.getElementById("progressBar").style.width = "20%";
+}
+
+function openRepository() {
+
+    window.open(
+        "https://github.com/",
+        "_blank"
+    );
+
+}
+
+</script>
+
+</body>
+</html>
