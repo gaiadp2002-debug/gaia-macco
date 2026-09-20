@@ -230,6 +230,52 @@ button:hover {
     padding: 7px;
 }
 
+.quest-card.locked {
+    opacity: .38;
+    filter: grayscale(.7);
+}
+
+.quest-card.locked button {
+    border-color: rgba(255,255,255,.15);
+    color: rgba(255,255,255,.35);
+    cursor: not-allowed;
+}
+
+.quest-card.completed {
+    border-color: rgba(80,255,160,.45) !important;
+}
+
+.quest-card.completed button {
+    border-color: rgba(80,255,160,.5);
+    color: #70ffb0;
+}
+
+.achievement {
+    width: min(850px, 100%);
+    margin-top: 25px;
+    padding: 18px;
+    border: 1px solid rgba(157,124,255,.35);
+    background: rgba(157,124,255,.06);
+    text-align: center;
+}
+
+.achievement-title {
+    font-size: 9px;
+    letter-spacing: 3px;
+    opacity: .5;
+    margin-bottom: 8px;
+}
+
+.achievement-name {
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.unlock {
+    color: #9d7cff;
+    font-size: 9px;
+    margin-top: 8px;
+}
 .final {
     text-align: center;
 }
