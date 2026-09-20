@@ -371,77 +371,77 @@ button:hover {
 
     <div class="quest">
 
-        <div class="quest-card">
-            <div class="quest-number">001</div>
-            <div>
-                <h3>WHEN DID IT ALL BEGIN?</h3>
-                <p>Restore the relationship start date.</p>
-            </div>
-            <div class="badge">🔴 ERROR</div>
-        </div>
+     <div class="quest-card">
+    <div class="quest-number">001</div>
+    <div>
+        <h3>WHEN DID IT ALL BEGIN?</h3>
+        <p>Restore the relationship start date.</p>
+    </div>
+    <button onclick="openIssue(1)">INVESTIGATE →</button>
+</div>
 
-        <div class="quest-card">
-            <div class="quest-number">002</div>
-            <div>
-                <h3>THE FIRST ENCOUNTER</h3>
-                <p>Recover the year of the first meeting.</p>
-            </div>
-            <div class="badge">🔴 ERROR</div>
-        </div>
+<div class="quest-card">
+    <div class="quest-number">002</div>
+    <div>
+        <h3>THE FIRST ENCOUNTER</h3>
+        <p>Recover the year of the first meeting.</p>
+    </div>
+    <button onclick="openIssue(2)">INVESTIGATE →</button>
+</div>
 
-        <div class="quest-card">
-            <div class="quest-number">003</div>
-            <div>
-                <h3>THE FIRST KISS</h3>
-                <p>Restore the corrupted date.</p>
-            </div>
-            <div class="badge">🔴 ERROR</div>
-        </div>
+<div class="quest-card">
+    <div class="quest-number">003</div>
+    <div>
+        <h3>THE FIRST KISS</h3>
+        <p>Restore the corrupted date.</p>
+    </div>
+    <button onclick="openIssue(3)">INVESTIGATE →</button>
+</div>
 
-        <div class="quest-card">
-            <div class="quest-number">004</div>
-            <div>
-                <h3>WRONG LOCATION DETECTED</h3>
-                <p>Find the first real meeting place.</p>
-            </div>
-            <div class="badge">🔴 ERROR</div>
-        </div>
+      <div class="quest-card">
+    <div class="quest-number">004</div>
+    <div>
+        <h3>WRONG LOCATION DETECTED</h3>
+        <p>Find the first real meeting place.</p>
+    </div>
+    <button onclick="openIssue(4)">INVESTIGATE →</button>
+</div>
 
-        <div class="quest-card">
-            <div class="quest-number">005</div>
-            <div>
-                <h3>FIRST EXPEDITION CORRUPTED</h3>
-                <p>Recover the first trip together.</p>
-            </div>
-            <div class="badge">🔴 ERROR</div>
-        </div>
+       <div class="quest-card">
+    <div class="quest-number">005</div>
+    <div>
+        <h3>FIRST EXPEDITION CORRUPTED</h3>
+        <p>Recover the first trip together.</p>
+    </div>
+    <button onclick="openIssue(5)">INVESTIGATE →</button>
+</div>
 
-        <div class="quest-card">
-            <div class="quest-number">006</div>
-            <div>
-                <h3>AUDIO MEMORY CORRUPTION</h3>
-                <p>Restore the first concert.</p>
-            </div>
-            <div class="badge">🔴 ERROR</div>
-        </div>
+      <div class="quest-card">
+    <div class="quest-number">006</div>
+    <div>
+        <h3>AUDIO MEMORY CORRUPTION</h3>
+        <p>Restore the first concert.</p>
+    </div>
+    <button onclick="openIssue(6)">INVESTIGATE →</button>
+</div>
 
-        <div class="quest-card">
-            <div class="quest-number">007</div>
-            <div>
-                <h3>MONTHLY PROTOCOL FAILURE</h3>
-                <p>Restore the monthly tradition.</p>
-            </div>
-            <div class="badge">🔴 ERROR</div>
-        </div>
+      <div class="quest-card">
+    <div class="quest-number">007</div>
+    <div>
+        <h3>MONTHLY PROTOCOL FAILURE</h3>
+        <p>Restore the monthly tradition.</p>
+    </div>
+    <button onclick="openIssue(7)">INVESTIGATE →</button>
+</div>
 
-        <div class="quest-card">
-            <div class="quest-number">008</div>
-            <div>
-                <h3>⚠ WINNER SYSTEM COMPROMISED</h3>
-                <p>There can only be one winner.</p>
-            </div>
-            <div class="badge">☠ CRITICAL</div>
-        </div>
+       <div class="quest-card">
+    <div class="quest-number">008</div>
+    <div>
+        <h3>⚠ WINNER SYSTEM COMPROMISED</h3>
+        <p>There can only be one winner.</p>
+    </div>
+    <button onclick="openIssue(8)">INVESTIGATE →</button>
+</div>
 
     </div>
 
@@ -630,7 +630,17 @@ function initializeSystem() {
 function openRepository() {
 
     window.open(
-        "https://github.com/",
+        "https://github.com/gaiadp2002-debug/gaia-macco",
+        "_blank"
+    );
+
+}
+
+
+function openIssue(number) {
+
+    window.open(
+        "https://github.com/gaiadp2002-debug/gaia-macco/issues/" + number,
         "_blank"
     );
 
