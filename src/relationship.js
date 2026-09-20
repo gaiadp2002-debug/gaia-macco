@@ -91,7 +91,7 @@ function runSystemCheck() {
         console.log("Relationship OS restored.");
         console.log("Congratulations, Nerdacco.");
         console.log("=================================");
-    } else {
+        } else {
         console.log("=================================");
         console.log("BUILD FAILED");
         console.log(`${errors.length} critical errors detected.`);
@@ -99,7 +99,11 @@ function runSystemCheck() {
         console.log("=================================");
 
         errors.forEach(error => console.log(error));
+
+        process.exitCode = 1;
     }
 }
+
+runSystemCheck();
 
 runSystemCheck();
