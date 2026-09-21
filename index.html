@@ -782,7 +782,7 @@ function openIssue(number) {
 
 }
 
-
+let questCompleted = false;
 async function checkProgress() {
 
     try {
@@ -925,13 +925,15 @@ for (let number = 1; number <= 8; number++) {
 
         // FINAL QUEST
 
-        if (fixed === 8) {
+     if (fixed === 8 && !questCompleted) {
 
-            setTimeout(() => {
-                showScreen("final");
-            }, 1000);
+    questCompleted = true;
 
-        }
+    setTimeout(() => {
+        showScreen("final");
+    }, 1000);
+
+}
 
     } catch (error) {
 
