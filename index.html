@@ -705,24 +705,41 @@ button:hover {
             QUEST UNLOCKED
         </div>
 
+        <div class="quest-character">
+            <div class="macco-quest-sprite" aria-label="Macco"></div>
+        </div>
+
+        <div class="big">
+            ✦ NEW QUEST ✦
+        </div>
+
         <h2>THE NEXT ADVENTURE</h2>
 
-        <div class="pack">🎒</div>
-
         <p>
-            You successfully restored the Relationship OS.
+            Relationship OS has been fully restored.
         </p>
 
         <p>
-            As a reward, a new quest has been unlocked.
+            Your reward has been generated.
         </p>
+
+        <div class="achievement">
+
+            <div class="achievement-title">
+                REWARD DETECTED
+            </div>
+
+            <div class="achievement-name">
+                🎒 WEEKEND QUEST
+            </div>
+
+            <div class="unlock">
+                TWO PLAYERS · ONE WEEKEND · UNKNOWN DESTINATION
+            </div>
+
+        </div>
 
         <div class="stats">
-
-            <div class="stat">
-                <span>DURATION</span>
-                <strong>1 WEEKEND</strong>
-            </div>
 
             <div class="stat">
                 <span>PLAYERS</span>
@@ -730,23 +747,32 @@ button:hover {
             </div>
 
             <div class="stat">
-                <span>DESTINATION</span>
-                <strong>CLASSIFIED</strong>
+                <span>DURATION</span>
+                <strong>1 WEEKEND</strong>
             </div>
 
             <div class="stat">
-                <span>DEPARTURE</span>
+                <span>DATE</span>
+                <strong>17–18 OCT</strong>
+            </div>
+
+            <div class="stat">
+                <span>DESTINATION</span>
                 <strong>CLASSIFIED</strong>
             </div>
 
         </div>
 
         <p>
-            ⚠️ This quest cannot be completed from home.
+            ⚠️ QUEST REQUIREMENT:
         </p>
 
         <p>
-            Your next save point is somewhere else.
+            Leave home.
+        </p>
+
+        <p>
+            Bring your favourite person.
         </p>
 
         <button onclick="acceptQuest()">
@@ -790,7 +816,39 @@ button:hover {
         transform: translateY(-8px);
     }
 }
+/* MACCO — NEW QUEST */
 
+.quest-character {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0 5px;
+}
+
+.macco-quest-sprite {
+    width: 190px;
+    height: 230px;
+
+    background-image: url("22A75EE5-C1AA-4713-8B67-33ACD78B0011.png");
+    background-repeat: no-repeat;
+    background-size: 1000px 665px;
+    background-position: -20px -30px;
+
+    image-rendering: pixelated;
+
+    animation: questMacco 1.6s ease-in-out infinite;
+}
+
+@keyframes questMacco {
+
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
 <!-- QUEST ACCEPTED -->
 <section id="accepted" class="screen">
 
