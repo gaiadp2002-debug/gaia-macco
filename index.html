@@ -965,12 +965,19 @@ for (let number = 1; number <= 8; number++) {
 
         // QUEST PROGRESS
 
-        const progress = document.getElementById("questProgress");
+const progress = document.getElementById("questProgress");
 
-        if (progress) {
-            progress.innerHTML =
-                "QUEST PROGRESS: " + fixed + " / 8";
-        }
+if (progress) {
+
+    const percentage = (fixed / 8) * 100;
+
+    progress.innerHTML = `
+        <div>QUEST PROGRESS: ${fixed} / 8</div>
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: ${percentage}%"></div>
+        </div>
+    `;
+}
 
 
         // ACHIEVEMENTS
