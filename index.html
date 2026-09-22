@@ -216,7 +216,31 @@ button:hover {
 
     image-rendering: pixelated;
 }
+.macco-mission-sprite.investigating {
+    animation: maccoInvestigate 0.5s ease;
+}
 
+@keyframes maccoInvestigate {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+
+    25% {
+        transform: translateY(-10px) scale(1.08);
+    }
+
+    50% {
+        transform: translateY(0) scale(1.08);
+    }
+
+    75% {
+        transform: translateY(-5px) scale(1.04);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
 .terminal {
     min-height: 230px;
 .terminal {
