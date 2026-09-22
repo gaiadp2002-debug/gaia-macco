@@ -853,10 +853,20 @@ function openRepository() {
 
 function openIssue(number) {
 
-    window.open(
-        "https://github.com/gaiadp2002-debug/gaia-macco/issues/" + number,
-        "_blank"
-    );
+    const macco = document.querySelector(".macco-mission-sprite");
+
+    if (macco) {
+        macco.classList.add("investigating");
+    }
+
+    setTimeout(function () {
+
+        window.open(
+            "https://github.com/gaiadp2002-debug/gaia-macco/issues/" + number,
+            "_blank"
+        );
+
+    }, 500);
 
 }
 
