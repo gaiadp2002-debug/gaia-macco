@@ -154,6 +154,45 @@ button:hover {
     box-shadow: 0 0 25px rgba(157,124,255,.6);
 }
 
+.boot-layout {
+    width: min(900px, 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.boot-layout .panel {
+    flex: 1;
+}
+
+.macco-sprite {
+    width: 250px;
+    height: 400px;
+    flex-shrink: 0;
+
+    background-image: url("22A75EE5-C1AA-4713-8B67-33ACD78B0011.png");
+    background-repeat: no-repeat;
+    background-size: 1000px 665px;
+    background-position: -20px -30px;
+
+    image-rendering: pixelated;
+}
+
+@media (max-width: 700px) {
+
+    .boot-layout {
+        flex-direction: column-reverse;
+        gap: 5px;
+    }
+
+    .macco-sprite {
+        transform: scale(.72);
+        transform-origin: center bottom;
+        margin-bottom: -90px;
+    }
+
+}
 .terminal {
     min-height: 230px;
     display: flex;
